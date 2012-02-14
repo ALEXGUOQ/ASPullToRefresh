@@ -1,8 +1,11 @@
 //
-//  PullRefreshTableViewController.h
-//  Plancast
+//  FueledPullToRefreshTableViewController.h
+//  Fueled (www.fueled.com)
 //
-//  Created by Leah Culver on 7/2/10.
+//  Created by Arthur Sabintsev on 02/14/12.
+//  Copyright © 2012 Arthur Sabintsev
+//  
+//  Originall created by Leah Culver on 7/2/10.
 //  Copyright (c) 2010 Leah Culver
 //
 //  Permission is hereby granted, free of charge, to any person
@@ -29,31 +32,20 @@
 
 #import <UIKit/UIKit.h>
 
+@interface ASPullToRefreshTableViewController : UITableViewController
 
-@interface PullRefreshTableViewController : UITableViewController {
-    UIView *refreshHeaderView;
-    UILabel *refreshLabel;
-    UIImageView *refreshArrow;
-    UIActivityIndicatorView *refreshSpinner;
-    BOOL isDragging;
-    BOOL isLoading;
-    NSString *textPull;
-    NSString *textRelease;
-    NSString *textLoading;
-}
+/* 
+ In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ 
+ - (void)didPullToRefresh 
+ {
+    // Object to refresh goes here
+ 
+    [super didPullToRefresh]
+ }
+ 
+*/
 
-@property (nonatomic, retain) UIView *refreshHeaderView;
-@property (nonatomic, retain) UILabel *refreshLabel;
-@property (nonatomic, retain) UIImageView *refreshArrow;
-@property (nonatomic, retain) UIActivityIndicatorView *refreshSpinner;
-@property (nonatomic, copy) NSString *textPull;
-@property (nonatomic, copy) NSString *textRelease;
-@property (nonatomic, copy) NSString *textLoading;
-
-- (void)setupStrings;
-- (void)addPullToRefreshHeader;
-- (void)startLoading;
-- (void)stopLoading;
-- (void)refresh;
+- (void)didPullToRefresh;
 
 @end
