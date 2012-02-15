@@ -1,6 +1,6 @@
 //
-//  FueledPullToRefreshTableViewController.m
-//  Fueled (www.fueled.com)
+//  ASPullToRefreshTableViewController.m
+//  Made at Fueled (www.fueled.com)
 //
 //  Created by Arthur Sabintsev on 02/14/12.
 //  Copyright © 2012 Arthur Sabintsev
@@ -94,6 +94,7 @@
     self.refreshLabel.textAlignment = UITextAlignmentCenter;
     [self.refreshHeaderView addSubview:self.refreshLabel];
 
+    // Create refreshTimestampLabal that displays the last time the dataSource was refreshed
     self.refreshTimestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 320.0f, kREFRESH_HEADER_HEIGHT)];
     self.refreshTimestampLabel.backgroundColor = [UIColor clearColor];
     self.refreshTimestampLabel.font = [UIFont boldSystemFontOfSize:9.0f];
@@ -101,14 +102,17 @@
     self.refreshTimestampLabel.textAlignment = UITextAlignmentCenter;
     [self.refreshHeaderView addSubview:self.refreshTimestampLabel];
     
+    // Create refreshArrow to show the direction of the scroll (rotates directions when scrolling reaches value delineated by kREFRESH_HEADER_HEIGHT) 
     self.refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fueledPullToRefreshArrow.png"]];
     self.refreshArrow.frame = CGRectMake(floorf((kREFRESH_HEADER_HEIGHT - 27.0f) / 2.0f), (floorf(kREFRESH_HEADER_HEIGHT - 44.0f) / 2.0f), 27.0f, 44.0f);
     [self.refreshHeaderView addSubview:self.refreshArrow];
     
+    // Create refreshSpinner (e.g., UIActivityIndicatorView)
     self.refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.refreshSpinner.frame = CGRectMake(floorf(floorf(kREFRESH_HEADER_HEIGHT - 20.0f) / 2.0f), floorf((kREFRESH_HEADER_HEIGHT - 20.0f) / 2.0f), 20.0f, 20.0f);
     self.refreshSpinner.hidesWhenStopped = YES;
 
+    // Add refreshHeaderView to tableView view hiearchy
     [self.refreshHeaderView addSubview:self.refreshSpinner];
     [self.tableView addSubview:self.refreshHeaderView];
 
@@ -129,7 +133,7 @@
     [self.refreshSpinner startAnimating];
     [UIView commitAnimations];
 
-    // Refresh action!
+    // Refresh
     [self didPullToRefresh];
 }
 
@@ -172,7 +176,6 @@
 - (NSString*)refreshTimestamp
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     [dateFormatter setDateFormat:@"MMM. d, YYY 'at' h:mm a"];
     return [dateFormatter stringFromDate:[NSDate date]];
 }
@@ -188,8 +191,10 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView 
 {
+    // Set isDragging flag to YES
     self.isDragging = YES;
     
+    // If app is loading, escape method to avoid multiple calls to refresh
     if (self.isLoading) return;
 }
 
@@ -218,11 +223,13 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate 
 {
+    // Set isDragging flag to NO
     self.isDragging = NO;
     
+    // If app is loading, escape method to avoid multiple startLoading/refresh calls
     if (self.isLoading) return;
     
-    // Released above the header
+    // User is scrolling above the header
     if (scrollView.contentOffset.y < -kREFRESH_HEADER_HEIGHT) [self startLoading];
 
 }

@@ -1,6 +1,6 @@
 //
-//  FueledPullToRefreshTableViewController.h
-//  Fueled (www.fueled.com)
+//  ASPullToRefreshTableViewController.h
+//  Made at Fueled (www.fueled.com)
 //
 //  Created by Arthur Sabintsev on 02/14/12.
 //  Copyright © 2012 Arthur Sabintsev
