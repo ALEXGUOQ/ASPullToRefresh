@@ -44,19 +44,18 @@
 
 @interface ASPullToRefreshTableViewController ()
 
-@property (assign, nonatomic) BOOL isLoading;
-@property (assign, nonatomic) BOOL isDragging;
-@property (strong, nonatomic) UILabel *refreshTimestampLabel;
-@property (strong, nonatomic) UILabel *refreshLabel;
-@property (strong, nonatomic) UIImageView *refreshArrow;
-@property (strong, nonatomic) UIActivityIndicatorView *refreshSpinner;
-@property (strong, nonatomic) UIView *refreshHeaderView;
+@property (assign, nonatomic) BOOL isDragging;                              // Monitors to monitor scroll state of table
+@property (assign, nonatomic) BOOL isRefreshing;                            // Monitors refresh state of table
+@property (strong, nonatomic) UILabel *refreshTimestampLabel;               // Holds timestamp of refresh
+@property (strong, nonatomic) UILabel *refreshLabel;                        // Holds text to textually/visually delineate the table's refresh state
+@property (strong, nonatomic) UIImageView *refreshArrow;                    // Indicates scroll direction to initiate table refresh
+@property (strong, nonatomic) UIActivityIndicatorView *refreshSpinner;      // Indicates refresh is in progress
+@property (strong, nonatomic) UIView *refreshHeaderView;                    // The refresh header 
 
-- (void)createPullToRefreshHeader;
-- (void)startLoading;
-- (void)stopLoading;
-- (void)stopLoadingComplete;
-- (NSString*)refreshTimestamp;
+- (void)createPullToRefreshHeader;                                          // Create Pull-To-Refresh Header
+- (void)didBeginRefreshing;                                                 // Begins the refresh process
+- (void)resetRefreshState;                                                  // Resets variables for next refresh
+- (NSString*)refreshTimestamp;                                              // Returns time of refresh
 
 @end
 
@@ -66,7 +65,7 @@
 @synthesize refreshArrow = _refreshArrow; 
 @synthesize refreshSpinner = _refreshSpinner; 
 @synthesize refreshHeaderView = _refreshHeaderView; 
-@synthesize isLoading = _isLoading; 
+@synthesize isRefreshing = _isRefreshing; 
 @synthesize isDragging = _isDragging;
 
 #pragma mark - View Lifecycle Methods
@@ -120,9 +119,9 @@
 
 #pragma mark - Loading Methods
 
-- (void)startLoading 
+- (void)didBeginRefreshing 
 {
-    self.isLoading = YES;
+    self.isRefreshing = YES;
 
     // Show the header
     [UIView beginAnimations:nil context:NULL];
@@ -133,13 +132,13 @@
     [self.refreshSpinner startAnimating];
     [UIView commitAnimations];
 
-    // Refresh
-    [self didPullToRefresh];
+    // Refresh data
+    [self dataToRefresh];
 }
 
-- (void)stopLoading 
+- (void)didFinishRefreshing 
 {
-    self.isLoading = NO;
+    self.isRefreshing = NO;
     
     // Get refresh timestamp
     NSString *timeStamp = [self refreshTimestamp];
@@ -154,7 +153,7 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDuration:0.3];
-    [UIView setAnimationDidStopSelector:@selector(stopLoadingComplete)];
+    [UIView setAnimationDidStopSelector:@selector(resetRefreshState)];
     self.tableView.contentInset = UIEdgeInsetsZero;
     UIEdgeInsets tableContentInset = self.tableView.contentInset;
     tableContentInset.top = 0.0f;
@@ -163,9 +162,8 @@
     [UIView commitAnimations];
 }
 
-- (void)stopLoadingComplete 
+- (void)resetRefreshState 
 {
-    // Reset the header
     self.refreshLabel.text = kTEXT_PULL;
     self.refreshArrow.hidden = NO;
     [self.refreshSpinner stopAnimating];
@@ -182,20 +180,20 @@
 
 #pragma mark - Refresh Method
 
-- (void)didPullToRefresh 
+- (void)dataToRefresh 
 {    
-    [self stopLoading];
+    // Do nothing in Super Class
 }
 
 #pragma mark - UIScrollViewDelegate Methods
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView 
 {
-    // Set isDragging flag to YES
+    
     self.isDragging = YES;
     
     // If app is loading, escape method to avoid multiple calls to refresh
-    if (self.isLoading) return;
+    if (self.isRefreshing) return;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView 
@@ -223,14 +221,14 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate 
 {
-    // Set isDragging flag to NO
+
     self.isDragging = NO;
     
-    // If app is loading, escape method to avoid multiple startLoading/refresh calls
-    if (self.isLoading) return;
+    // If app is loading, escape method to avoid multiple didBeginRefreshing/refresh calls
+    if (self.isRefreshing) return;
     
     // User is scrolling above the header
-    if (scrollView.contentOffset.y < -kREFRESH_HEADER_HEIGHT) [self startLoading];
+    if (scrollView.contentOffset.y < -kREFRESH_HEADER_HEIGHT) [self didBeginRefreshing];
 
 }
 

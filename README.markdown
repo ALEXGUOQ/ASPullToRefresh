@@ -1,6 +1,6 @@
 # ASPullToRefresh
 
-## A simple iPhone UITableViewController for adding "Pull-to-Refresh" functionality.
+## A simple UITableViewController for adding "Pull-to-Refresh" functionality.
 
 ### Installation Instruction:
 
@@ -12,11 +12,36 @@
 1. Create a UITableViewController that is a subclass of ASPullToRefreshTableViewController.
 1. Customize your subclassed UITableViewController by adding the following method:
 
-<pre> - (void)didPullToRefresh 
-    { 
-        // Objects/Methods to call for refresh go here 
-        [super didPullToRefresh] 
-	} 
+<pre> /// FOR SYNCHRONOUS CALLS ///
+
+/* 
+ In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ 
+ - (void)dataToRefresh
+ {
+    // Object to refresh goes here
+ 
+    // For synchronous calls, call [super didFinishRefreshing] before exiting this method 
+    [super didFinishRefreshing]; 
+ }
+ 
+*/
+
+/// FOR ASYNCHRONOUS CALLS ///
+
+/* 
+ In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ 
+ - (void)dataToRefresh
+ {
+    // Object to refresh goes here
+ }
+ 
+ Then, Call [super didFinishRefreshing] in the success/failure delegate methods
+ [super didFinishRefreshing]; 
+ 
+*/
+
 </pre>
 
 
@@ -28,11 +53,18 @@
 ### Forked from:
 - [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
 
-###  Release Notes (v1.0.1):
+###  Release Notes (v1.1):
+- Renamed all methods for clarity
+- Added support for asynchronous calls
+	- Exposed two methods to achieve this; dataToRefresh &amp; didFinishRefreshing.
+- Added more documentation
+
+###  Previous Release Notes:
+
+#### v1.0.1
 - Added more comments
 - Removal of a couple lines of unnecessary code
 
-###  Previous Release Notes:
 #### v1.0  
 - Forked from [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/) 
 - Added Auto Reference Counting 

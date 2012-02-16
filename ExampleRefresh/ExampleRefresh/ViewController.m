@@ -52,7 +52,7 @@
     return cell;
 }
 
-- (void)didPullToRefresh 
+- (void)dataToRefresh 
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
@@ -60,7 +60,7 @@
     [self.items insertObject:[NSString stringWithFormat:@"%@", now] atIndex:0];
     [self.tableView reloadData];
     
-    [super didPullToRefresh];
+    [super didFinishRefreshing];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

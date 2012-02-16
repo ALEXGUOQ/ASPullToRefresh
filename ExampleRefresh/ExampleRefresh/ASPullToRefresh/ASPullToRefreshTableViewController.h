@@ -34,18 +34,38 @@
 
 @interface ASPullToRefreshTableViewController : UITableViewController
 
+- (void)dataToRefresh;          // Data to refresh when pulling down on UITableView
+- (void)didFinishRefreshing;    // Hides variables and resets refresh-UIView and assoicated variables
+
+
+/// FOR SYNCHRONOUS CALLS ///
+
 /* 
  In your subclassed FueledPullToRefreshTableViewController, call the following method:
  
- - (void)didPullToRefresh 
+ - (void)dataToRefresh
  {
     // Object to refresh goes here
  
-    [super didPullToRefresh]
+    // For synchronous calls, call [super didFinishRefreshing] before exiting this method 
+    [super didFinishRefreshing]; 
  }
  
 */
 
-- (void)didPullToRefresh;
+/// FOR ASYNCHRONOUS CALLS ///
+
+/* 
+ In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ 
+ - (void)dataToRefresh
+ {
+    // Object to refresh goes here
+ }
+ 
+ Then, Call [super didFinishRefreshing] in the success/failure delegate methods
+ [super didFinishRefreshing]; 
+ 
+*/
 
 @end
