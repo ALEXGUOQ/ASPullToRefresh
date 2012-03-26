@@ -59,14 +59,15 @@
     NSString *now = [dateFormatter stringFromDate:[NSDate date]];
     [self.items insertObject:[NSString stringWithFormat:@"%@", now] atIndex:0];
     [self.tableView reloadData];
-    
-    [super didFinishRefreshing];
+ 
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
+    
+    return YES;
 }
 
 @end
