@@ -37,7 +37,6 @@
 
 @interface ASPullToRefreshTableViewController : UITableViewController
 
-- (void)dataToRefresh;          // Data to refresh when pulling down on UITableView
 - (void)didFinishRefreshing;    // Hides variables and resets refresh-UIView and assoicated variables
 
 /// GENERAL ///

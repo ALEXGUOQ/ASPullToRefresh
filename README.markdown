@@ -69,13 +69,18 @@
 ### Forked from:
 - [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
 
-###  Release Notes (v1.2.0):
+###  Release Notes (v1.2.1):
+- Removed public access to dataToRefresh method
+- Minor code tweaks
+
+###  Previous Release Notes:
+
+####  v1.2.0:
 - Added support for 'LandscapeLeft', 'LandscapeRight', and 'PortraitUpsideDown' orientations
 - Add observers for call to didFinishRefreshing
 - Changed name of arrow to pullToRefreshArrow
 - Added more documentation
 
-###  Previous Release Notes:
 
 ####  v1.1.0:
 - Renamed all methods for clarity

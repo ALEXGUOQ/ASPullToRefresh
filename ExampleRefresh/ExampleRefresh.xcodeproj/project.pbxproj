@@ -15,8 +15,8 @@
 		8E01899714EAF6CB008821B0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01899614EAF6CB008821B0 /* AppDelegate.m */; };
 		8E01899A14EAF6CC008821B0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01899914EAF6CC008821B0 /* ViewController.m */; };
 		8E0189AA14EAF85F008821B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0189A914EAF85F008821B0 /* QuartzCore.framework */; };
-		8E65F59414EB6D9B0024428B /* ASPullToRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65F59214EB6D9B0024428B /* ASPullToRefreshTableViewController.m */; };
-		8E975C95152036DC00FDBB25 /* pullToRefreshArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E975C94152036DC00FDBB25 /* pullToRefreshArrow@2x.png */; };
+		8E975CD91520408600FDBB25 /* ASPullToRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E975CD71520408600FDBB25 /* ASPullToRefreshTableViewController.m */; };
+		8E975CDA1520408600FDBB25 /* pullToRefreshArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E975CD81520408600FDBB25 /* pullToRefreshArrow@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,9 +33,9 @@
 		8E01899814EAF6CB008821B0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		8E01899914EAF6CC008821B0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8E0189A914EAF85F008821B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		8E65F59114EB6D9B0024428B /* ASPullToRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASPullToRefreshTableViewController.h; sourceTree = "<group>"; };
-		8E65F59214EB6D9B0024428B /* ASPullToRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASPullToRefreshTableViewController.m; sourceTree = "<group>"; };
-		8E975C94152036DC00FDBB25 /* pullToRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pullToRefreshArrow@2x.png"; sourceTree = "<group>"; };
+		8E975CD61520408600FDBB25 /* ASPullToRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASPullToRefreshTableViewController.h; sourceTree = "<group>"; };
+		8E975CD71520408600FDBB25 /* ASPullToRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASPullToRefreshTableViewController.m; sourceTree = "<group>"; };
+		8E975CD81520408600FDBB25 /* pullToRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pullToRefreshArrow@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 		8E01898C14EAF6CB008821B0 /* ExampleRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				8E65F59014EB6D9B0024428B /* ASPullToRefresh */,
+				8E975CD51520408600FDBB25 /* ASPullToRefresh */,
 				8E01899514EAF6CB008821B0 /* AppDelegate.h */,
 				8E01899614EAF6CB008821B0 /* AppDelegate.m */,
 				8E01899814EAF6CB008821B0 /* ViewController.h */,
@@ -105,15 +105,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8E65F59014EB6D9B0024428B /* ASPullToRefresh */ = {
+		8E975CD51520408600FDBB25 /* ASPullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				8E975C94152036DC00FDBB25 /* pullToRefreshArrow@2x.png */,
-				8E65F59114EB6D9B0024428B /* ASPullToRefreshTableViewController.h */,
-				8E65F59214EB6D9B0024428B /* ASPullToRefreshTableViewController.m */,
+				8E975CD61520408600FDBB25 /* ASPullToRefreshTableViewController.h */,
+				8E975CD71520408600FDBB25 /* ASPullToRefreshTableViewController.m */,
+				8E975CD81520408600FDBB25 /* pullToRefreshArrow@2x.png */,
 			);
-			name = ASPullToRefresh;
-			path = "../../../../../../../Arthur/Documents/Third Party Code/Github/ASPullToRefresh/ExampleRefresh/ExampleRefresh/ASPullToRefresh";
+			path = ASPullToRefresh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,7 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E01899114EAF6CB008821B0 /* InfoPlist.strings in Resources */,
-				8E975C95152036DC00FDBB25 /* pullToRefreshArrow@2x.png in Resources */,
+				8E975CDA1520408600FDBB25 /* pullToRefreshArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +180,7 @@
 				8E01899314EAF6CB008821B0 /* main.m in Sources */,
 				8E01899714EAF6CB008821B0 /* AppDelegate.m in Sources */,
 				8E01899A14EAF6CC008821B0 /* ViewController.m in Sources */,
-				8E65F59414EB6D9B0024428B /* ASPullToRefreshTableViewController.m in Sources */,
+				8E975CD91520408600FDBB25 /* ASPullToRefreshTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
