@@ -69,11 +69,16 @@
 ### Forked from:
 - [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
 
-###  Release Notes (v1.2.1):
-- Removed public access to dataToRefresh method
-- Minor code tweaks
+###  Release Notes (v1.2.2):
+- Re-added support for iOS 4.3
+- Modified orientation detection methods
+- Retained text from refreshTimeStampLabel's text property
 
 ###  Previous Release Notes:
+
+####  v1.2.1:
+- Removed public access to dataToRefresh method
+- Minor code tweaks
 
 ####  v1.2.0:
 - Added support for 'LandscapeLeft', 'LandscapeRight', and 'PortraitUpsideDown' orientations
