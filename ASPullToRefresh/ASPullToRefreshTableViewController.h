@@ -32,10 +32,22 @@
 
 #import <UIKit/UIKit.h>
 
+#define     kInterfaceOrientationDiDChange  @"InterfaceOrientationDidChange"
+#define     kDidFinishRefreshing            @"DidFinishRefreshing"
+
 @interface ASPullToRefreshTableViewController : UITableViewController
 
 - (void)dataToRefresh;          // Data to refresh when pulling down on UITableView
 - (void)didFinishRefreshing;    // Hides variables and resets refresh-UIView and assoicated variables
+
+/// GENERAL ///
+/*
+ 
+ Add the following message to your Table ViewController's 'shouldAutorotateToInterfaceOrientation' method.
+ 
+ [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
+ 
+ */
 
 
 /// FOR SYNCHRONOUS CALLS ///
@@ -48,7 +60,7 @@
     // Object to refresh goes here
  
     // For synchronous calls, call [super didFinishRefreshing] before exiting this method 
-    [super didFinishRefreshing]; 
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
  }
  
 */
@@ -63,8 +75,11 @@
     // Object to refresh goes here
  }
  
- Then, Call [super didFinishRefreshing] in the success/failure delegate methods
- [super didFinishRefreshing]; 
+ Then, call 
+ 
+ [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil]; 
+ 
+ in the success/failure delegate methods
  
 */
 

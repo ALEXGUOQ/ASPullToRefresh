@@ -7,12 +7,24 @@
 1. Copy the 'ASPullToRefresh' folder into your Xcode project. The following files will be added:
 	1. ASPullToRefreshTableViewController.h
 	1. ASPullToRefreshTableViewController.m
-	1. fueledPullToRefreshArrow.png 
+	1. pullToRefreshArrow.png 
 1. Link against the QuartzCore framework (used for rotating the arrow image).
 1. Create a UITableViewController that is a subclass of ASPullToRefreshTableViewController.
 1. Customize your subclassed UITableViewController by adding the following method:
 
 <pre> /// FOR SYNCHRONOUS CALLS ///
+
+/// GENERAL ///
+/*
+ 
+ Add the following message to your Table ViewController's 'shouldAutorotateToInterfaceOrientation' method.
+ 
+ [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
+ 
+ */
+
+
+/// FOR SYNCHRONOUS CALLS ///
 
 /* 
  In your subclassed FueledPullToRefreshTableViewController, call the following method:
@@ -22,7 +34,7 @@
     // Object to refresh goes here
  
     // For synchronous calls, call [super didFinishRefreshing] before exiting this method 
-    [super didFinishRefreshing]; 
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
  }
  
 */
@@ -37,10 +49,14 @@
     // Object to refresh goes here
  }
  
- Then, Call [super didFinishRefreshing] in the success/failure delegate methods
- [super didFinishRefreshing]; 
+ Then, call 
+ 
+ [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil]; 
+ 
+ in the success/failure delegate methods
  
 */
+
 
 </pre>
 
@@ -53,19 +69,25 @@
 ### Forked from:
 - [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
 
-###  Release Notes (v1.1):
+###  Release Notes (v1.2.0):
+- Added support for 'LandscapeLeft', 'LandscapeRight', and 'PortraitUpsideDown' orientations
+- Add observers for call to didFinishRefreshing
+- Changed name of arrow to pullToRefreshArrow
+- Added more documentation
+
+###  Previous Release Notes:
+
+####  v1.1.0:
 - Renamed all methods for clarity
 - Added support for asynchronous calls
 	- Exposed two methods to achieve this; dataToRefresh &amp; didFinishRefreshing.
 - Added more documentation
 
-###  Previous Release Notes:
-
 #### v1.0.1
 - Added more comments
 - Removal of a couple lines of unnecessary code
 
-#### v1.0  
+#### v1.0.0 
 - Forked from [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/) 
 - Added Auto Reference Counting 
 - Removed setupStrings method in favor of macros

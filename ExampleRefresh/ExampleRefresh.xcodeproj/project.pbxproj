@@ -16,7 +16,7 @@
 		8E01899A14EAF6CC008821B0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01899914EAF6CC008821B0 /* ViewController.m */; };
 		8E0189AA14EAF85F008821B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0189A914EAF85F008821B0 /* QuartzCore.framework */; };
 		8E65F59414EB6D9B0024428B /* ASPullToRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65F59214EB6D9B0024428B /* ASPullToRefreshTableViewController.m */; };
-		8E65F59514EB6D9B0024428B /* fueledPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E65F59314EB6D9B0024428B /* fueledPullToRefreshArrow.png */; };
+		8E975C95152036DC00FDBB25 /* pullToRefreshArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E975C94152036DC00FDBB25 /* pullToRefreshArrow@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +35,7 @@
 		8E0189A914EAF85F008821B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8E65F59114EB6D9B0024428B /* ASPullToRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASPullToRefreshTableViewController.h; sourceTree = "<group>"; };
 		8E65F59214EB6D9B0024428B /* ASPullToRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASPullToRefreshTableViewController.m; sourceTree = "<group>"; };
-		8E65F59314EB6D9B0024428B /* fueledPullToRefreshArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fueledPullToRefreshArrow.png; sourceTree = "<group>"; };
+		8E975C94152036DC00FDBB25 /* pullToRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pullToRefreshArrow@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,9 +108,9 @@
 		8E65F59014EB6D9B0024428B /* ASPullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				8E975C94152036DC00FDBB25 /* pullToRefreshArrow@2x.png */,
 				8E65F59114EB6D9B0024428B /* ASPullToRefreshTableViewController.h */,
 				8E65F59214EB6D9B0024428B /* ASPullToRefreshTableViewController.m */,
-				8E65F59314EB6D9B0024428B /* fueledPullToRefreshArrow.png */,
 			);
 			name = ASPullToRefresh;
 			path = "../../../../../../../Arthur/Documents/Third Party Code/Github/ASPullToRefresh/ExampleRefresh/ExampleRefresh/ASPullToRefresh";
@@ -167,7 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E01899114EAF6CB008821B0 /* InfoPlist.strings in Resources */,
-				8E65F59514EB6D9B0024428B /* fueledPullToRefreshArrow.png in Resources */,
+				8E975C95152036DC00FDBB25 /* pullToRefreshArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
