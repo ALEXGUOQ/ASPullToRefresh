@@ -58,7 +58,7 @@
  {
     // Object to refresh goes here
  
-    // For synchronous calls, call [super didFinishRefreshing] before exiting this method 
+    // For synchronous calls, post the following notification before exiting this method:
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
  }
  
