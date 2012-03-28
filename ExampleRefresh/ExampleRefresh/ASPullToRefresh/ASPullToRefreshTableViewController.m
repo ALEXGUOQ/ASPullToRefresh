@@ -207,7 +207,7 @@
     if (self.refreshLabel) [self.refreshLabel removeFromSuperview];
     if (self.refreshTimestampLabel) [self.refreshTimestampLabel removeFromSuperview];
     
-    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
     if ( UIDeviceOrientationPortrait == orientation || UIDeviceOrientationPortraitUpsideDown == orientation ) {
         
