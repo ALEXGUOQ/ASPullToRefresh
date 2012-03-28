@@ -54,7 +54,7 @@
 @property (strong, nonatomic) UIView *refreshHeaderView;                    // The refresh header 
 
 - (void)registerObservers;                                                  // Register Observer Methods
-- (void)labelsForOrientation;                                               // Interface orientation did change
+- (void)labelsForOrientation;                                               // Change labels when interface orientation changes
 - (void)createPullToRefreshHeader;                                          // Create Pull-To-Refresh Header
 - (void)didBeginRefreshing;                                                 // Begins the refresh process
 - (void)resetRefreshState;                                                  // Resets variables for next refresh
@@ -106,10 +106,8 @@
     self.refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, -kREFRESH_HEADER_HEIGHT, 320.0f, kREFRESH_HEADER_HEIGHT)];
     self.refreshHeaderView.backgroundColor = [UIColor clearColor];
     
-    
     // Create refreshLabel and refreshTimeStampLabel
     [self labelsForOrientation];
-
     
     // Create refreshArrow to show the direction of the scroll (rotates directions when scrolling reaches value delineated by kREFRESH_HEADER_HEIGHT) 
     self.refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kPullToRefreshArrow]];
@@ -156,7 +154,7 @@
     self.refreshTimestampLabel.text = [NSString stringWithFormat:@"Last refreshed on %@", timeStamp];
     
     // Move refreshLabel's frame up by 10 pixels to make room for refreshTimestampLabel's text output
-    if ( UIInterfaceOrientationPortrait == [[UIApplication sharedApplication] statusBarOrientation] || UIInterfaceOrientationPortraitUpsideDown == [[UIApplication sharedApplication] statusBarOrientation] ) {
+    if ( UIDeviceOrientationPortrait == [[UIApplication sharedApplication] statusBarOrientation] || UIDeviceOrientationPortraitUpsideDown == [[UIApplication sharedApplication] statusBarOrientation] ) {
         self.refreshLabel.frame = CGRectMake(0.0f, 0.0f, 320.0f, kREFRESH_HEADER_HEIGHT);
         self.refreshTimestampLabel.frame = CGRectMake(0.0f, 10.0f, 320.0f, kREFRESH_HEADER_HEIGHT);
     } else {
@@ -195,7 +193,7 @@
 #pragma mark - Refresh Method
 - (void)dataToRefresh 
 {    
-    // Do nothing in Super Class
+    // Do nothing in ASPullToRefreshTableViewController
 }
 
 #pragma mark - Label Creation Method (Interface Orientation Observer Method)
@@ -205,13 +203,13 @@
     // Temporary String
     NSString *refreshTimestampLabelText = self.refreshTimestampLabel.text;
     
-    // Remove labels from SuperView if they exist
+    // Remove labels from Superview if they exist
     if (self.refreshLabel) [self.refreshLabel removeFromSuperview];
     if (self.refreshTimestampLabel) [self.refreshTimestampLabel removeFromSuperview];
     
     UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
     
-    if ( UIInterfaceOrientationPortrait == orientation || UIInterfaceOrientationPortraitUpsideDown == orientation ) {
+    if ( UIDeviceOrientationPortrait == orientation || UIDeviceOrientationPortraitUpsideDown == orientation ) {
         
         // Create refreshLabel that textually delineates the 'refresh-state' using strings (e.g., kTEXT_PULL, kTEXT_RELEASE, kTEXT_LOADING)
         self.refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, kREFRESH_HEADER_HEIGHT)];
@@ -228,7 +226,6 @@
         self.refreshTimestampLabel.textAlignment = UITextAlignmentCenter;
         self.refreshTimestampLabel.text = refreshTimestampLabelText;
         [self.refreshHeaderView addSubview:self.refreshTimestampLabel];
-        
         
     } else {
         
