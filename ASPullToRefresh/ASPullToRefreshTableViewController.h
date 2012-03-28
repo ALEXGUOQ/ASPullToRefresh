@@ -1,6 +1,6 @@
 //
 //  ASPullToRefreshTableViewController.h
-//  Made at Fueled (www.fueled.com)
+//  Originally made at Fueled (www.fueled.com)
 //
 //  Created by Arthur Sabintsev on 02/14/12.
 //  Copyright © 2012 Arthur Sabintsev
@@ -81,5 +81,21 @@
  in the success/failure delegate methods
  
 */
+
+/// FOR ORIENTATION CHANGES ///
+
+/*
+ 
+ Replace your UIViewController's 'shouldAutorotateToInterfaceOrientation:' method with
+ 
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+ {
+ 
+ [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
+ 
+ return YES;
+ }
+ 
+ */
 
 @end

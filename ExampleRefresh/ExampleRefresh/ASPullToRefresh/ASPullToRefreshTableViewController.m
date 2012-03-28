@@ -47,15 +47,15 @@
 
 @property (assign, nonatomic) BOOL isDragging;                              // Monitors to monitor scroll state of table
 @property (assign, nonatomic) BOOL isRefreshing;                            // Monitors refresh state of table
-@property (strong, nonatomic) UILabel *refreshTimestampLabel;               // Holds timestamp of refresh
 @property (strong, nonatomic) UILabel *refreshLabel;                        // Holds text to textually/visually delineate the table's refresh state
+@property (strong, nonatomic) UILabel *refreshTimestampLabel;               // Holds timestamp of refresh
 @property (strong, nonatomic) UIImageView *refreshArrow;                    // Indicates scroll direction to initiate table refresh
 @property (strong, nonatomic) UIActivityIndicatorView *refreshSpinner;      // Indicates refresh is in progress
 @property (strong, nonatomic) UIView *refreshHeaderView;                    // The refresh header 
 
 - (void)registerObservers;                                                  // Register Observer Methods
-- (void)labelsForOrientation;                                               // Change labels when interface orientation changes
 - (void)createPullToRefreshHeader;                                          // Create Pull-To-Refresh Header
+- (void)createLabelsOnOrientationChange;                                    // Change labels when interface orientation changes
 - (void)didBeginRefreshing;                                                 // Begins the refresh process
 - (void)resetRefreshState;                                                  // Resets variables for next refresh
 - (NSString*)refreshTimestamp;                                              // Returns time of refresh
@@ -63,8 +63,8 @@
 @end
 
 @implementation ASPullToRefreshTableViewController
-@synthesize refreshTimestampLabel = _refreshTimestampLabel;
 @synthesize refreshLabel = _refreshLabel; 
+@synthesize refreshTimestampLabel = _refreshTimestampLabel;
 @synthesize refreshArrow = _refreshArrow; 
 @synthesize refreshSpinner = _refreshSpinner; 
 @synthesize refreshHeaderView = _refreshHeaderView; 
@@ -86,13 +86,15 @@
 - (void)registerObservers
 {
 
+    // Add Observer to hide refreshHeaderView after refresh completes
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(didFinishRefreshing) 
                                                  name:kDidFinishRefreshing 
                                                object:nil];
     
+    // Add Observer to hide redraw refreshLabel and refreshTimeStampLabel on orientation change
     [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(labelsForOrientation) 
+                                             selector:@selector(createLabelsOnOrientationChange) 
                                                  name:kInterfaceOrientationDiDChange 
                                                object:nil];
     
@@ -107,7 +109,7 @@
     self.refreshHeaderView.backgroundColor = [UIColor clearColor];
     
     // Create refreshLabel and refreshTimeStampLabel
-    [self labelsForOrientation];
+    [self createLabelsOnOrientationChange];
     
     // Create refreshArrow to show the direction of the scroll (rotates directions when scrolling reaches value delineated by kREFRESH_HEADER_HEIGHT) 
     self.refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kPullToRefreshArrow]];
@@ -154,14 +156,9 @@
     self.refreshTimestampLabel.text = [NSString stringWithFormat:@"Last refreshed on %@", timeStamp];
     
     // Move refreshLabel's frame up by 10 pixels to make room for refreshTimestampLabel's text output
-    if ( UIDeviceOrientationPortrait == [[UIApplication sharedApplication] statusBarOrientation] || UIDeviceOrientationPortraitUpsideDown == [[UIApplication sharedApplication] statusBarOrientation] ) {
-        self.refreshLabel.frame = CGRectMake(0.0f, 0.0f, 320.0f, kREFRESH_HEADER_HEIGHT);
-        self.refreshTimestampLabel.frame = CGRectMake(0.0f, 10.0f, 320.0f, kREFRESH_HEADER_HEIGHT);
-    } else {
-        self.refreshLabel.frame = CGRectMake(0.0f, 0.0f, 480.0f, kREFRESH_HEADER_HEIGHT);
-        self.refreshTimestampLabel.frame = CGRectMake(0.0f, 10.0f, 480.0f, kREFRESH_HEADER_HEIGHT);
-    }
-    
+    self.refreshLabel.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT);
+    self.refreshTimestampLabel.frame = CGRectMake(0.0f, 10.0f, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT);
+
     // Hide the header (via animation)
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDelegate:self];
@@ -197,7 +194,7 @@
 }
 
 #pragma mark - Label Creation Method (Interface Orientation Observer Method)
-- (void)labelsForOrientation
+- (void)createLabelsOnOrientationChange
 {
     
     // Temporary String
@@ -206,47 +203,23 @@
     // Remove labels from Superview if they exist
     if (self.refreshLabel) [self.refreshLabel removeFromSuperview];
     if (self.refreshTimestampLabel) [self.refreshTimestampLabel removeFromSuperview];
+        
+    // Create refreshLabel that textually delineates the 'refresh-state' using strings (e.g., kTEXT_PULL, kTEXT_RELEASE, kTEXT_LOADING)
+    self.refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT)];
+    self.refreshLabel.backgroundColor = [UIColor clearColor];
+    self.refreshLabel.font = [UIFont boldSystemFontOfSize:11.0f];
+    self.refreshLabel.textAlignment = UITextAlignmentCenter;
+    [self.refreshHeaderView addSubview:self.refreshLabel];
     
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    
-    if ( UIDeviceOrientationPortrait == orientation || UIDeviceOrientationPortraitUpsideDown == orientation ) {
-        
-        // Create refreshLabel that textually delineates the 'refresh-state' using strings (e.g., kTEXT_PULL, kTEXT_RELEASE, kTEXT_LOADING)
-        self.refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, kREFRESH_HEADER_HEIGHT)];
-        self.refreshLabel.backgroundColor = [UIColor clearColor];
-        self.refreshLabel.font = [UIFont boldSystemFontOfSize:11.0f];
-        self.refreshLabel.textAlignment = UITextAlignmentCenter;
-        [self.refreshHeaderView addSubview:self.refreshLabel];
-        
-        // Create refreshTimestampLabal that displays the last time the dataSource was refreshed
-        self.refreshTimestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 320.0f, kREFRESH_HEADER_HEIGHT)];
-        self.refreshTimestampLabel.backgroundColor = [UIColor clearColor];
-        self.refreshTimestampLabel.font = [UIFont boldSystemFontOfSize:9.0f];
-        self.refreshTimestampLabel.textColor = [UIColor grayColor];
-        self.refreshTimestampLabel.textAlignment = UITextAlignmentCenter;
-        self.refreshTimestampLabel.text = refreshTimestampLabelText;
-        [self.refreshHeaderView addSubview:self.refreshTimestampLabel];
-        
-    } else {
-        
-        // Create refreshLabel that textually delineates the 'refresh-state' using strings (e.g., kTEXT_PULL, kTEXT_RELEASE, kTEXT_LOADING)
-        self.refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 480.0f, kREFRESH_HEADER_HEIGHT)];
-        self.refreshLabel.backgroundColor = [UIColor clearColor];
-        self.refreshLabel.font = [UIFont boldSystemFontOfSize:11.0f];
-        self.refreshLabel.textAlignment = UITextAlignmentCenter;
-        [self.refreshHeaderView addSubview:self.refreshLabel];
-        
-        // Create refreshTimestampLabal that displays the last time the dataSource was refreshed
-        self.refreshTimestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 480.0f, kREFRESH_HEADER_HEIGHT)];
-        self.refreshTimestampLabel.backgroundColor = [UIColor clearColor];
-        self.refreshTimestampLabel.font = [UIFont boldSystemFontOfSize:9.0f];
-        self.refreshTimestampLabel.textColor = [UIColor grayColor];
-        self.refreshTimestampLabel.textAlignment = UITextAlignmentCenter;
-        self.refreshTimestampLabel.text = refreshTimestampLabelText;
-        [self.refreshHeaderView addSubview:self.refreshTimestampLabel];
-        
-    }
-    
+    // Create refreshTimestampLabal that displays the last time the dataSource was refreshed
+    self.refreshTimestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 10.0f, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT)];
+    self.refreshTimestampLabel.backgroundColor = [UIColor clearColor];
+    self.refreshTimestampLabel.font = [UIFont boldSystemFontOfSize:9.0f];
+    self.refreshTimestampLabel.textColor = [UIColor grayColor];
+    self.refreshTimestampLabel.textAlignment = UITextAlignmentCenter;
+    self.refreshTimestampLabel.text = refreshTimestampLabelText;
+    [self.refreshHeaderView addSubview:self.refreshTimestampLabel];
+
     [self.tableView reloadData];
 
 }

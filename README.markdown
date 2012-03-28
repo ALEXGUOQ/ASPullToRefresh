@@ -2,6 +2,14 @@
 
 ## A simple UITableViewController for adding "Pull-to-Refresh" functionality.
 
+### Features:
+
+1. Works with Synchronous and Asyncrhonous calls
+1. Works with custom UITableViewDataSources and custom UITableViewDelegates
+1. Compatible with iOS 4 and iOS 5
+1. Compatible with iPhone and iPad
+1. Compatible with all device/interface orientations
+
 ### Installation Instruction:
 
 1. Copy the 'ASPullToRefresh' folder into your Xcode project. The following files will be added:
@@ -57,6 +65,21 @@
  
 */
 
+/// FOR ORIENTATION CHANGES ///
+
+/*
+ 
+ Replace your UIViewController's 'shouldAutorotateToInterfaceOrientation:' method with
+ 
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+ {
+ 
+ [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
+ 
+ return YES;
+ }
+ 
+ */
 
 </pre>
 
@@ -69,12 +92,20 @@
 ### Forked from:
 - [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
 
-###  Release Notes (v1.2.2):
+###  Release Notes (v1.3.0):
+- More abstraction to code to 
+	- Supprt iPad Displays
+	- Support Retina Displays
+	- Device orientaiton Ccanges
+- Improved Documentation
+
+###  Previous Release Notes:
+
+####  v1.2.2:
 - Re-added support for iOS 4.3
 - Modified orientation detection methods
 - Retained text from refreshTimeStampLabel's text property
 
-###  Previous Release Notes:
 
 ####  v1.2.1:
 - Removed public access to dataToRefresh method

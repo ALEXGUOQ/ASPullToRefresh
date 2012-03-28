@@ -10,12 +10,12 @@
 
 @interface ViewController ()
 
-@property (strong, nonatomic) NSMutableArray *items;
+@property (strong, nonatomic) NSMutableArray *array;
 
 @end
 
 @implementation ViewController
-@synthesize items = _items;
+@synthesize array = _array;
 
 #pragma mark - Memory Deallocaiton Methods
 
@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     self.title = @"Demo";
-    self.items = [[NSMutableArray alloc] initWithObjects:@"What time is it?", nil];
+    self.array = [[NSMutableArray alloc] initWithObjects:@"What time is it?", nil];
 }
 
 #pragma mark - UITableViewDatasource Methods
@@ -37,7 +37,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-    return [self.items count];
+    return [self.array count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -46,7 +46,7 @@
     static NSString *CellIdentifier = @"CellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    cell.textLabel.text = [self.items objectAtIndex:indexPath.row];
+    cell.textLabel.text = [self.array objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -57,7 +57,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     NSString *now = [dateFormatter stringFromDate:[NSDate date]];
-    [self.items insertObject:[NSString stringWithFormat:@"%@", now] atIndex:0];
+    [self.array insertObject:[NSString stringWithFormat:@"%@", now] atIndex:0];
     [self.tableView reloadData];
  
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
@@ -65,6 +65,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
     
     return YES;
