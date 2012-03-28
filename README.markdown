@@ -94,9 +94,9 @@
 
 ###  Release Notes (v1.3.0):
 - More abstraction to code to 
-	- Supprt iPad Displays
-	- Support Retina Displays
-	- Device orientaiton Ccanges
+	- supprt iPad displays
+	- support retina displays
+	- device orientaiton changes
 - Improved Documentation
 
 ###  Previous Release Notes:
