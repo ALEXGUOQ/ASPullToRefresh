@@ -1,4 +1,4 @@
-# ASPullToRefresh
+# ASPullToRefresh-Simple
 
 ## A simple UITableViewController for adding "Pull-to-Refresh" functionality.
 
