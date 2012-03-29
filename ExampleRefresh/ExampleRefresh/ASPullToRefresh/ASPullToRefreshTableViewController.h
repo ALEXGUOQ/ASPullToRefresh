@@ -50,7 +50,7 @@
 /// FOR SYNCHRONOUS CALLS ///
 
 /* 
- In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ In your subclassed ASPullToRefreshTableViewController, call the following method:
  
  - (void)dataToRefresh
  {
@@ -65,7 +65,7 @@
 /// FOR ASYNCHRONOUS CALLS ///
 
 /* 
- In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ In your subclassed ASPullToRefreshTableViewController, call the following method:
  
  - (void)dataToRefresh
  {
