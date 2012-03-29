@@ -1,6 +1,5 @@
 //
 //  ASPullToRefreshTableViewController.m
-//  Made at Fueled (www.fueled.com)
 //
 //  Created by Arthur Sabintsev on 02/14/12.
 //  Copyright © 2012 Arthur Sabintsev
@@ -71,6 +70,12 @@
 @synthesize isRefreshing = _isRefreshing; 
 @synthesize isDragging = _isDragging;
 
+#pragma mark - Deallocate Observers
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidFinishRefreshing object:nil];
+}
+
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad 
 {
@@ -92,12 +97,6 @@
                                                  name:kDidFinishRefreshing 
                                                object:nil];
     
-    // Add Observer to hide redraw refreshLabel and refreshTimeStampLabel on orientation change
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(createLabelsOnOrientationChange) 
-                                                 name:kInterfaceOrientationDiDChange 
-                                               object:nil];
-    
 }
 
 #pragma mark - Create Pull-To-Refresh Header Method
@@ -105,8 +104,10 @@
 {
     
     // Create UIView to mimic UITableView's tableHeaderView
-    self.refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, -kREFRESH_HEADER_HEIGHT, 320.0f, kREFRESH_HEADER_HEIGHT)];
+    self.refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, -kREFRESH_HEADER_HEIGHT, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT)];
     self.refreshHeaderView.backgroundColor = [UIColor clearColor];
+    self.refreshHeaderView.autoresizesSubviews = YES;
+    self.refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     // Create refreshLabel and refreshTimeStampLabel
     [self createLabelsOnOrientationChange];
@@ -206,6 +207,8 @@
         
     // Create refreshLabel that textually delineates the 'refresh-state' using strings (e.g., kTEXT_PULL, kTEXT_RELEASE, kTEXT_LOADING)
     self.refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT)];
+    self.refreshLabel.autoresizesSubviews = YES;
+    self.refreshLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.refreshLabel.backgroundColor = [UIColor clearColor];
     self.refreshLabel.font = [UIFont boldSystemFontOfSize:11.0f];
     self.refreshLabel.textAlignment = UITextAlignmentCenter;
@@ -213,14 +216,14 @@
     
     // Create refreshTimestampLabal that displays the last time the dataSource was refreshed
     self.refreshTimestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 10.0f, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT)];
+    self.refreshTimestampLabel.autoresizesSubviews = YES;
+    self.refreshTimestampLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.refreshTimestampLabel.backgroundColor = [UIColor clearColor];
     self.refreshTimestampLabel.font = [UIFont boldSystemFontOfSize:9.0f];
     self.refreshTimestampLabel.textColor = [UIColor grayColor];
     self.refreshTimestampLabel.textAlignment = UITextAlignmentCenter;
     self.refreshTimestampLabel.text = refreshTimestampLabelText;
     [self.refreshHeaderView addSubview:self.refreshTimestampLabel];
-
-    [self.tableView reloadData];
 
 }
 

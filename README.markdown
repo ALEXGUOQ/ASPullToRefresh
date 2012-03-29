@@ -92,14 +92,18 @@
 ### Forked from:
 - [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
 
-###  Release Notes (v1.3.0):
+###  Release Notes (v1.3.1):
+- Removed observer for Interface Orientation Change
+- Removed unnecessary tableView reload
+
+###  Previous Release Notes:
+
+#### v1.3.0:
 - More abstraction to code to 
 	- supprt iPad displays
 	- support retina displays
 	- device orientaiton changes
 - Improved Documentation
-
-###  Previous Release Notes:
 
 ####  v1.2.2:
 - Re-added support for iOS 4.3
