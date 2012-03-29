@@ -35,6 +35,7 @@
 
 @interface ASPullToRefreshTableViewController : UITableViewController
 
+- (void)dataToRefresh;          // Refresh Method
 - (void)didFinishRefreshing;    // Hides variables and resets refresh-UIView and assoicated variables
 
 /// GENERAL ///

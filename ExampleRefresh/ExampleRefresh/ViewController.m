@@ -53,7 +53,7 @@
     return cell;
 }
 
-- (void)dataToRefresh 
+- (void)dataToRefresh
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
