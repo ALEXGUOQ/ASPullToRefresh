@@ -42,7 +42,7 @@
  
  Add the following message to your Table ViewController's 'shouldAutorotateToInterfaceOrientation' method.
  
- [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
+ [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
  
  */
 

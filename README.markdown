@@ -27,7 +27,7 @@
  
  Add the following message to your Table ViewController's 'shouldAutorotateToInterfaceOrientation' method.
  
- [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
+ [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
  
  */
 
@@ -35,7 +35,7 @@
 /// FOR SYNCHRONOUS CALLS ///
 
 /* 
- In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ In your subclassed ASPullToRefreshTableViewController, call the following method:
  
  - (void)dataToRefresh
  {
@@ -50,7 +50,7 @@
 /// FOR ASYNCHRONOUS CALLS ///
 
 /* 
- In your subclassed FueledPullToRefreshTableViewController, call the following method:
+ In your subclassed ASPullToRefreshTableViewController, call the following method:
  
  - (void)dataToRefresh
  {
@@ -64,23 +64,6 @@
  in the success/failure delegate methods
  
 */
-
-/// FOR ORIENTATION CHANGES ///
-
-/*
- 
- Replace your UIViewController's 'shouldAutorotateToInterfaceOrientation:' method with
- 
- - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
- {
- 
- [[NSNotificationCenter defaultCenter] postNotificationName:kInterfaceOrientationDiDChange object:nil];
- 
- return YES;
- }
- 
- */
-
 </pre>
 
 
