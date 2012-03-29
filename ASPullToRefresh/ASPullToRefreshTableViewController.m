@@ -55,6 +55,7 @@
 - (void)registerObservers;                                                  // Register Observer Methods
 - (void)createPullToRefreshHeader;                                          // Create Pull-To-Refresh Header
 - (void)didBeginRefreshing;                                                 // Begins the refresh process
+- (void)didFinishRefreshing;                                                // Ends the refresh process
 - (void)resetRefreshState;                                                  // Resets variables for next refresh
 - (NSString*)refreshTimestamp;                                              // Returns time of refresh
 
