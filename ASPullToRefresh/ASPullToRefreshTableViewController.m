@@ -44,8 +44,8 @@
 
 @interface ASPullToRefreshTableViewController ()
 
-@property (assign, nonatomic) BOOL isDragging;                              // Monitors to monitor scroll state of table
-@property (assign, nonatomic) BOOL isRefreshing;                            // Monitors refresh state of table
+@property (assign, nonatomic) BOOL isDragging;                   // Monitors to monitor scroll state of table
+@property (assign, nonatomic) BOOL isRefreshing;                 // Monitors refresh state of table
 @property (strong, nonatomic) UILabel *refreshLabel;                        // Holds text to textually/visually delineate the table's refresh state
 @property (strong, nonatomic) UILabel *refreshTimestampLabel;               // Holds timestamp of refresh
 @property (strong, nonatomic) UIImageView *refreshArrow;                    // Indicates scroll direction to initiate table refresh
