@@ -1,71 +1,36 @@
 # ASPullToRefresh
 
-## A simple UITableViewController for adding "Pull-to-Refresh" functionality.
+## A reusable UITableViewController for adding "Pull-to-Refresh" functionality.
 
 ### Features:
 
 1. Works with Synchronous and Asyncrhonous calls
 1. Works with custom UITableViewDataSources and custom UITableViewDelegates
-1. Compatible with iOS 4 and iOS 5
+1. Compatible with iOS 4, iOS 5, and iOS 6
 1. Compatible with iPhone and iPad
 1. Compatible with all device/interface orientations
+
+### Why should I use ASPullToRefresh?
+While this code is compatible with every type of project, it may be look unnecessarily complicated for most users. This class was made for users who like to create a single custom TableViewController classes, but reuse it multiple times with multiple UITableViewDataSources and UITableViewDelegates, which I, and other developers have come to call ***TableViewManagers***. Read the ***Example use case*** to get an understanding of how you could use this class in a real world scenario.
+
+#### Example use sase
+Let's say you're building a Twitter client. You'll notice that the public stream and all twitter lists have the same basic format, e.g., a bunch of tweets shown vertically, with the newest ones at the top.  The optimal way to build the stream and lists on an iOS would be through UITableViewController with pull-to-refresh functionality, so that a user can manually refresh the stream at their own convenience. Since the UITableViewController doesn't have pull-to-refresh functionality by default, I opted to create a UITableViewController that does have it: ***ASPullToRefreshTableViewController***.
+
+At the architectural level, it would be wise to build one UITableViewController with all the basic aspects that these two types of UITableViewControllers share, but if you build one UITableViewController, you will have only one UITableViewDataSource and UITableViewDelegate for multiple types of data that you'd like to refresh (e.g., stream data, list #1's data, list #2's data, etc…). You could add conditions to discriminate between the stream and the different lists inside your UITableViewController, but this would lead to massive (and unmanageable) UITableViewDataSource methods. 
+
+To avoid these massive methods, you should create ***TableViewManagers*** (e.g., classes that contain the UITableViewDataSource and UITableViewDelegate methods). To create these TableViewManagers, you create an instance of your reusable, custom subclass of ASPullToRefreshTableViewController. In the TableViewControllers ***init*** method, you initialize the TableViewManager of your choise. In the TableViewManager, you have all the UITableViewDataSource and UITableViewDelegate methods, and pass their reference to the UITableViewController which initiated them. 
+
+That's it. You now have a single, reusable UITableViewController with pull-to-refresh functionality that can be re-used with multiple UITableViewDataSources and UITableViewDelegates.
 
 ### Installation Instruction:
 
 1. Copy the 'ASPullToRefresh' folder into your Xcode project. The following files will be added:
 	1. ASPullToRefreshTableViewController.h
 	1. ASPullToRefreshTableViewController.m
-	1. pullToRefreshArrow.png 
+	1. pullToRefreshArrow@2x.png 
 1. Link against the QuartzCore framework (used for rotating the arrow image).
 1. Create a UITableViewController that is a subclass of ASPullToRefreshTableViewController.
-1. Customize your subclassed UITableViewController by adding the following method:
-
-<pre> /// FOR SYNCHRONOUS CALLS ///
-
-/// GENERAL ///
-/*
- 
- Add the following message to your Table ViewController's 'shouldAutorotateToInterfaceOrientation' method.
- 
- [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
- 
- */
-
-
-/// FOR SYNCHRONOUS CALLS ///
-
-/* 
- In your subclassed ASPullToRefreshTableViewController, call the following method:
- 
- - (void)dataToRefresh
- {
-    // Object to refresh goes here
- 
-    // For synchronous calls, post the following notification before exiting this method: 
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
- }
- 
-*/
-
-/// FOR ASYNCHRONOUS CALLS ///
-
-/* 
- In your subclassed ASPullToRefreshTableViewController, call the following method:
- 
- - (void)dataToRefresh
- {
-    // Object to refresh goes here
- }
- 
- Then, call 
- 
- [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil]; 
- 
- in the success/failure delegate methods
- 
-*/
-</pre>
-
+1. Follow the logic in the ExamplePullToRefresh project - it's straightforward.
 
 ### Inspired by:
 - [Tweetie 2](http://www.atebits.com/tweetie-iphone/)
@@ -75,11 +40,15 @@
 ### Forked from:
 - [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
 
-###  Release Notes (v1.3.1):
-- Removed observer for Interface Orientation Change
-- Removed unnecessary tableView reload
+###  Release Notes (v2.0.0):
+- Complete revamp of code
+- Now works with custom tableView Delegates and DatasSources that use the same parent TableViewController 
 
 ###  Previous Release Notes:
+
+####  v1.3.1:
+- Removed observer for Interface Orientation Change
+- Removed unnecessary tableView reload
 
 #### v1.3.0:
 - More abstraction to code to 

@@ -31,53 +31,16 @@
 
 #import <UIKit/UIKit.h>
 
-#define     kDidFinishRefreshing            @"DidFinishRefreshing"
+@protocol ASPullToRefreshDelegate <NSObject>
+- (void)dataToRefresh;                                                                                  // Refresh Method
+@end
 
 @interface ASPullToRefreshTableViewController : UITableViewController
 
-- (void)dataToRefresh;          // Refresh Method
+// PullToRefresh Delegate
+@property (assign, nonatomic) id <NSObject, UITableViewDataSource, UITableViewDelegate, ASPullToRefreshDelegate> refreshDelegate;   
 
-/// GENERAL ///
-/*
- 
- Add the following message to your Table ViewController's 'shouldAutorotateToInterfaceOrientation' method.
- 
- [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
- 
- */
-
-
-/// FOR SYNCHRONOUS CALLS ///
-
-/* 
- In your subclassed ASPullToRefreshTableViewController, call the following method:
- 
- - (void)dataToRefresh
- {
-    // Object to refresh goes here
- 
-    // For synchronous calls, post the following notification before exiting this method:
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil];
- }
- 
-*/
-
-/// FOR ASYNCHRONOUS CALLS ///
-
-/* 
- In your subclassed ASPullToRefreshTableViewController, call the following method:
- 
- - (void)dataToRefresh
- {
-    // Object to refresh goes here
- }
- 
- Then, call 
- 
- [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishRefreshing object:nil]; 
- 
- in the success/failure delegate methods
- 
-*/
+// Ends the refresh process
+- (void)didFinishRefreshing;                                                                                                        
 
 @end

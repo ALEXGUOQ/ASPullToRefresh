@@ -44,15 +44,14 @@
 
 @interface ASPullToRefreshTableViewController ()
 
-@property (assign, nonatomic) BOOL isDragging;                   // Monitors to monitor scroll state of table
-@property (assign, nonatomic) BOOL isRefreshing;                 // Monitors refresh state of table
+@property (assign, nonatomic) BOOL isDragging;                              // Monitors to monitor scroll state of table
+@property (assign, nonatomic) BOOL isRefreshing;                            // Monitors refresh state of table
 @property (strong, nonatomic) UILabel *refreshLabel;                        // Holds text to textually/visually delineate the table's refresh state
 @property (strong, nonatomic) UILabel *refreshTimestampLabel;               // Holds timestamp of refresh
 @property (strong, nonatomic) UIImageView *refreshArrow;                    // Indicates scroll direction to initiate table refresh
 @property (strong, nonatomic) UIActivityIndicatorView *refreshSpinner;      // Indicates refresh is in progress
 @property (strong, nonatomic) UIView *refreshHeaderView;                    // The refresh header 
 
-- (void)registerObservers;                                                  // Register Observer Methods
 - (void)createPullToRefreshHeader;                                          // Create Pull-To-Refresh Header
 - (void)didBeginRefreshing;                                                 // Begins the refresh process
 - (void)didFinishRefreshing;                                                // Ends the refresh process
@@ -62,6 +61,7 @@
 @end
 
 @implementation ASPullToRefreshTableViewController
+@synthesize refreshDelegate = _refreshDelegate;
 @synthesize refreshLabel = _refreshLabel; 
 @synthesize refreshTimestampLabel = _refreshTimestampLabel;
 @synthesize refreshArrow = _refreshArrow; 
@@ -70,33 +70,18 @@
 @synthesize isRefreshing = _isRefreshing; 
 @synthesize isDragging = _isDragging;
 
-#pragma mark - Deallocate Observers
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidFinishRefreshing object:nil];
-}
-
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
     
-    [self registerObservers];
-    
     [self createPullToRefreshHeader];
 }
 
-
-#pragma mark - Register Observers
-- (void)registerObservers
+- (void)viewWillDisappear:(BOOL)animated
 {
-
-    // Add Observer to hide refreshHeaderView after refresh completes
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(didFinishRefreshing) 
-                                                 name:kDidFinishRefreshing 
-                                               object:nil];
-    
+    [super viewWillDisappear:animated];
+    [self didFinishRefreshing];
 }
 
 #pragma mark - Create Pull-To-Refresh Header Method
@@ -120,6 +105,7 @@
     self.refreshLabel.backgroundColor = [UIColor clearColor];
     self.refreshLabel.font = [UIFont boldSystemFontOfSize:11.0f];
     self.refreshLabel.textAlignment = UITextAlignmentCenter;
+    self.refreshLabel.textColor = [UIColor blackColor];
     [self.refreshHeaderView addSubview:self.refreshLabel];
     
     // Create refreshTimestampLabal that displays the last time the dataSource was refreshed
@@ -134,7 +120,11 @@
 
     // Create refreshArrow to show the direction of the scroll (rotates directions when scrolling reaches value delineated by kREFRESH_HEADER_HEIGHT) 
     self.refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kPullToRefreshArrow]];
-    self.refreshArrow.frame = CGRectMake(floorf((kREFRESH_HEADER_HEIGHT - 27.0f) / 2.0f), (floorf(kREFRESH_HEADER_HEIGHT - 44.0f) / 2.0f), 27.0f, 44.0f);
+    self.refreshArrow.frame = CGRectMake(10.0f, 
+                                         kREFRESH_HEADER_HEIGHT/2.0 - self.refreshArrow.frame.size.height/2.0, 
+                                         self.refreshArrow.frame.size.width, 
+                                         self.refreshArrow.frame.size.height);
+
     [self.refreshHeaderView addSubview:self.refreshArrow];
     
     // Create refreshSpinner (e.g., UIActivityIndicatorView)
@@ -145,7 +135,6 @@
     // Add refreshHeaderView to tableView view hiearchy
     [self.refreshHeaderView addSubview:self.refreshSpinner];
     [self.tableView addSubview:self.refreshHeaderView];
-
 }
 
 #pragma mark - Loading Methods
@@ -163,7 +152,7 @@
     [UIView commitAnimations];
 
     // Refresh data
-    [self dataToRefresh];
+    [self.refreshDelegate dataToRefresh];
 }
 
 - (void)didFinishRefreshing 
@@ -207,13 +196,6 @@
     [dateFormatter setDateFormat:@"MMM. d, YYY 'at' h:mm a"];
     return [dateFormatter stringFromDate:[NSDate date]];
 }
-
-#pragma mark - Refresh Method
-- (void)dataToRefresh 
-{    
-    // Do nothing in ASPullToRefreshTableViewController
-}
-
 
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView 
@@ -259,6 +241,12 @@
     // User is scrolling above the header
     if (scrollView.contentOffset.y < -kREFRESH_HEADER_HEIGHT) [self didBeginRefreshing];
 
+}
+
+#pragma mark - ASPullToRefreshDelegate Methods
+- (void)dataToRefresh 
+{    
+    // Do nothing in ASPullToRefreshTableViewController
 }
 
 @end
