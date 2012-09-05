@@ -1,6 +1,6 @@
 # ASPullToRefresh
 
-## A reusable UITableViewController for adding "Pull-to-Refresh" functionality.
+## A UITableViewController for adding "Pull-to-Refresh" functionality.
 
 ### Features:
 
@@ -11,9 +11,9 @@
 1. Compatible with all device/interface orientations
 
 ### Why should I use ASPullToRefresh?
-While this code is compatible with every type of project, it may be look unnecessarily complicated for most users. This class was made for users who like to create a single custom TableViewController classes, but reuse it multiple times with multiple UITableViewDataSources and UITableViewDelegates, which I, and other developers have come to call ***TableViewManagers***. Read the ***Example use case*** to get an understanding of how you could use this class in a real world scenario.
+While this code is compatible with every type of project, it may look unnecessarily complicated for most users. This class was made for users who like to create a single custom TableViewController class, but reuse it multiple times with multiple UITableViewDataSources and UITableViewDelegates, which I, and other developers have come to call ***TableViewManagers***. Read the ***Example use case*** to get an understanding of how you could use this class in a real world scenario.
 
-#### Example use sase
+#### Example use case
 Let's say you're building a Twitter client. You'll notice that the public stream and all twitter lists have the same basic format, e.g., a bunch of tweets shown vertically, with the newest ones at the top.  The optimal way to build the stream and lists on an iOS would be through UITableViewController with pull-to-refresh functionality, so that a user can manually refresh the stream at their own convenience. Since the UITableViewController doesn't have pull-to-refresh functionality by default, I opted to create a UITableViewController that does have it: ***ASPullToRefreshTableViewController***.
 
 At the architectural level, it would be wise to build one UITableViewController with all the basic aspects that these two types of UITableViewControllers share, but if you build one UITableViewController, you will have only one UITableViewDataSource and UITableViewDelegate for multiple types of data that you'd like to refresh (e.g., stream data, list #1's data, list #2's data, etc…). You could add conditions to discriminate between the stream and the different lists inside your UITableViewController, but this would lead to massive (and unmanageable) UITableViewDataSource methods. 
@@ -27,6 +27,7 @@ That's it. You now have a single, reusable UITableViewController with pull-to-re
 1. Copy the 'ASPullToRefresh' folder into your Xcode project. The following files will be added:
 	1. ASPullToRefreshTableViewController.h
 	1. ASPullToRefreshTableViewController.m
+	1. pullToRefreshArrow.png
 	1. pullToRefreshArrow@2x.png 
 1. Link against the QuartzCore framework (used for rotating the arrow image).
 1. Create a UITableViewController that is a subclass of ASPullToRefreshTableViewController.
