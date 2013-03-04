@@ -39,66 +39,25 @@ That's it. You now have a single, reusable UITableViewController with pull-to-re
 - [EGOTableViewPullRefresh](http://github.com/enormego/EGOTableViewPullRefresh).  
 
 ### Forked from:
-- [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/)  
+- [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/) 
+- Note: Codebase has changed drastically. 
 
-###  Release Notes (v2.0.0):
-- Complete revamp of code
-- Now works with custom tableView Delegates and DatasSources that use the same parent TableViewController 
-
-###  Previous Release Notes:
-
-####  v1.3.1:
-- Removed observer for Interface Orientation Change
-- Removed unnecessary tableView reload
-
-#### v1.3.0:
-- More abstraction to code to 
-	- supprt iPad displays
-	- support retina displays
-	- device orientaiton changes
-- Improved Documentation
-
-####  v1.2.2:
-- Re-added support for iOS 4.3
-- Modified orientation detection methods
-- Retained text from refreshTimeStampLabel's text property
-
-
-####  v1.2.1:
-- Removed public access to dataToRefresh method
-- Minor code tweaks
-
-####  v1.2.0:
-- Added support for 'LandscapeLeft', 'LandscapeRight', and 'PortraitUpsideDown' orientations
-- Add observers for call to didFinishRefreshing
-- Changed name of arrow to pullToRefreshArrow
-- Added more documentation
-
-
-####  v1.1.0:
-- Renamed all methods for clarity
-- Added support for asynchronous calls
-	- Exposed two methods to achieve this; dataToRefresh &amp; didFinishRefreshing.
-- Added more documentation
-
-#### v1.0.1
-- Added more comments
-- Removal of a couple lines of unnecessary code
-
-#### v1.0.0 
-- Forked from [Leah Culver's PullToRefresh](https://github.com/leah/PullToRefresh/) 
-- Added Auto Reference Counting 
-- Removed setupStrings method in favor of macros
-- Encapsulated existing PullRefreshTableViewController, and renamed it to ASPullToRefreshTableViewController
-- Added Refresh Timestamp
-- Removed unncessary UITableView-related code
-- Improved readability
-
+###  Release Notes (v2.0.1):
+- Added code to determine if UITextAlignmentCenter or NSTextAlignmentCenter should be used for UILabels.
 
 ###  Other Notes:
 - If loading local or static data, the PullToRefresh view will fly up in an instance
 - If loading remote data (i.e., from an API), the PullToRefresh view will be visible until all data has been retrieved from your remote data source.
 
-Best,
+### Recognition
+Created by [Arthur Ariel Sabintsev](http://www.sabintsev.com)  
 
-[Arthur Ariel Sabintsev](http://www.sabintsev.com)  
+### License
+The MIT License (MIT)
+Copyright (c) 2012 Arthur Ariel Sabintsev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

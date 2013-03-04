@@ -88,6 +88,9 @@
 - (void)createPullToRefreshHeader 
 {
     
+    // Reference all app version (used to determine if UITextAlignmentCenter or NSTextAlignmentCenter should be used)
+    NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    
     // Create UIView to mimic UITableView's tableHeaderView
     self.refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, -kREFRESH_HEADER_HEIGHT, self.view.frame.size.width, kREFRESH_HEADER_HEIGHT)];
     self.refreshHeaderView.backgroundColor = [UIColor clearColor];
@@ -104,8 +107,8 @@
     self.refreshLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.refreshLabel.backgroundColor = [UIColor clearColor];
     self.refreshLabel.font = [UIFont boldSystemFontOfSize:11.0f];
-    self.refreshLabel.textAlignment = UITextAlignmentCenter;
     self.refreshLabel.textColor = [UIColor blackColor];
+    self.refreshLabel.textAlignment = ( 5 <= [[versionCompatibility objectAtIndex:0] intValue] ) ? UITextAlignmentCenter : NSTextAlignmentCenter;
     [self.refreshHeaderView addSubview:self.refreshLabel];
     
     // Create refreshTimestampLabal that displays the last time the dataSource was refreshed
@@ -115,7 +118,7 @@
     self.refreshTimestampLabel.backgroundColor = [UIColor clearColor];
     self.refreshTimestampLabel.font = [UIFont boldSystemFontOfSize:9.0f];
     self.refreshTimestampLabel.textColor = [UIColor grayColor];
-    self.refreshTimestampLabel.textAlignment = UITextAlignmentCenter;
+    self.refreshTimestampLabel.textAlignment = ( 5 <= [[versionCompatibility objectAtIndex:0] intValue] ) ? UITextAlignmentCenter : NSTextAlignmentCenter;
     [self.refreshHeaderView addSubview:self.refreshTimestampLabel];
 
     // Create refreshArrow to show the direction of the scroll (rotates directions when scrolling reaches value delineated by kREFRESH_HEADER_HEIGHT) 
