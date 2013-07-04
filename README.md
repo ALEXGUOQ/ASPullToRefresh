@@ -1,6 +1,9 @@
 # ASPullToRefresh
 
-## A UITableViewController for adding "Pull-to-Refresh" functionality.
+### A Class for adding "Pull-to-Refresh" functionality acorss multiple, similarly constructed UITableViewControllers
+
+### NO LONGER SUPPORTED
+I am no longer supporting this repository, as Apple has added similar functionality in iOS 6.
 
 ### Features:
 
